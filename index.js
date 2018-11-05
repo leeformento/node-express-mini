@@ -99,6 +99,20 @@ server.get('/api/contact', (req, res)  => {
 
 });
 
+server.put('/api/user/:id', (req, res) => {
+    const { id } = req.params;
+    const { name, bio } = req.body;
+    // Always check updates and respond accordingly.
+    // Endpoint not finished
+    const newUser = { name, bio };
+    console.log(newUser);
+    db.update(id, newUser)
+    .then( user => {
+        console.log(user);
+        res.status(200).json(user);
+    })
+    .catch(err => console.log(err));
+})
 
 
 
