@@ -25,6 +25,9 @@ server.get('/', (req, res) => {
 })
 
 server.get('/api/users', (req,res) => {
+    console.log(req.query); // read info with a query string ====== /api/users?u=lee. inside query, put key value pair of u equal to lee. seen in google search.
+    // seen in sorting. /users?sort=asc or desc.
+    // qualifiers = sort by date;; x y. search/filter
     // how to get data from database? callback: req handler/ route handler/ listener
     db.find().then( users => {
         // turn to json string
@@ -49,6 +52,40 @@ server.post('/api/users', (req, res) => {
     })
     
 })
+
+// Property from req object to create data = body
+server.post('/api/users', (req, res) => {
+    const {name, bio } = req.body; // take props off obj and take props to variables --- DESTRUCTURING THE OBJECT. THERE IS NAME, BIO FOUND IN BODY OBJ
+    const newUser = { name, bio } // name will create key value pair and bio
+    db.insert(newUser) // return built in obj type Promise. then and catch  = async
+    .then (userId => {
+        const { id } = userId;
+        db.findById(id).then(user => {
+            console.log(user)
+            if (!user) {
+                return res.status(422).send({Error: `user does not exist by that ${userId}`})
+            }
+            res.status(201).json(user);
+        })
+    })
+    .catch( err => console.log(err));
+})
+
+// delete
+server.delete('/api/users/:id', (req, res) => {
+    console.log(req.params);
+    const { id } = req.params;
+    db.remove(id)
+    .then(removedUser => {
+        console.log(removedUser);
+        res.status(200).json(removedUser);
+    })
+    .catch(err => {
+        res.send(err)
+    })
+
+})
+
 
 server.get('/api/about', (req, res) => {
     res.status(200).send('<h1>About Us</h1>') // 200 port is success
