@@ -99,7 +99,7 @@ server.get('/api/contact', (req, res)  => {
 
 });
 
-server.put('/api/user/:id', (req, res) => {
+server.put('/api/users/:id', (req, res) => {
     const { id } = req.params;
     const { name, bio } = req.body;
     // Always check updates and respond accordingly.
