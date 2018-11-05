@@ -35,6 +35,8 @@ server.get('/api/users', (req,res) => {
 
 })
 
+
+
 // Server! Watch for traffic in a particular port. Port: 
 const port = 7000;
 server.listen(port, () => console.log(`API running on port ${port}`))
@@ -52,3 +54,6 @@ server.listen(port, () => console.log(`API running on port ${port}`))
 
 // npm run server or yarn server or yarn start
 
+
+
+// DAY 2
