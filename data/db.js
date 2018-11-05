@@ -2,6 +2,7 @@ const knex = require('knex');
 const knexConfig = require('../knexfile.js');
 const db = knex(knexConfig.development);
 
+// promise. then find users
 module.exports = {
   find,
   findById,
