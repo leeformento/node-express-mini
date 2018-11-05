@@ -12,6 +12,7 @@ const server = express(); // fully functional web server
 
 // middleware. needed to connect from react
 server.use(cors());
+server.use(express.json());
 // request handler. HEY SERVER! If you ever see a get req with '/', execute this func
 // 1st arg: obj that represents the data on the req
 // 2nd arg: obj that represents the data on the response
@@ -34,6 +35,34 @@ server.get('/api/users', (req,res) => {
     // everytime u have a promise = BROS = then and catch ; success and errpr
 
 })
+
+server.post('/api/users', (req, res) => {
+    console.log(req.body);
+    const { name, bio } = req.body;
+    const newUser = { name, bio };
+    db.insert(newUser)
+    .then(insertedUser => {
+        res.status(201) // successful create.send('User Created!', insertedUser);
+    })
+    .catch(err => {
+        res.send(err);
+    })
+    
+})
+
+server.get('/api/about', (req, res) => {
+    res.status(200).send('<h1>About Us</h1>') // 200 port is success
+
+});
+
+server.get('/api/contact', (req, res)  => {
+    res
+    .status(200)
+    .send('<div><h1>Contact</h1> <input placeholder="email" /></div>');
+
+});
+
+
 
 
 
